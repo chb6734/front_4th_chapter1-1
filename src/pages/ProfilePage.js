@@ -1,6 +1,8 @@
 import { router } from "../main";
 
 export const ProfilePage = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   const view = `
   <div id="root">
     <div class="bg-gray-100 min-h-screen flex justify-center">
@@ -22,7 +24,7 @@ export const ProfilePage = () => {
             <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">
               내 프로필
             </h2>
-            <form>
+            <form id="profile">
               <div class="mb-4">
                 <label
                   for="username"
@@ -33,7 +35,7 @@ export const ProfilePage = () => {
                   type="text"
                   id="username"
                   name="username"
-                  value="홍길동"
+                  value="${user.username}"
                   class="w-full p-2 border rounded"
                 />
               </div>
@@ -47,7 +49,7 @@ export const ProfilePage = () => {
                   type="email"
                   id="email"
                   name="email"
-                  value="hong@example.com"
+                  value="${user.email ?? ""}"
                   class="w-full p-2 border rounded"
                 />
               </div>
@@ -63,8 +65,8 @@ export const ProfilePage = () => {
                   rows="4"
                   class="w-full p-2 border rounded"
                 >
-안녕하세요, 항해플러스에서 열심히 공부하고 있는 홍길동입니다.</textarea
-                >
+                "${user.bio ?? ""}"
+                  </textarea>
               </div>
               <button
                 type="submit"
@@ -84,10 +86,10 @@ export const ProfilePage = () => {
   </div>
 `;
   const init = () => {
-    const form = document.querySelector("nav");
-    console.log(form);
-    if (form) {
-      form.addEventListener("click", (e) => {
+    const nav = document.querySelector("nav");
+    console.log(nav);
+    if (nav) {
+      nav.addEventListener("click", (e) => {
         if (e.target.tagName === "A") {
           e.preventDefault();
           router.navigateTo(e.target.pathname);
