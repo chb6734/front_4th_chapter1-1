@@ -7,19 +7,24 @@ export const Router = () => {
   }
 
   function handleRoute(path) {
-    let handler;
+    console.log(path);
+    let page;
     if (path === "/profile") {
       const user = JSON.parse(localStorage.getItem("user"));
+      console.log("user : ", user);
       if (user) {
-        handler = routes["/profile"];
+        page = routes["/profile"];
       } else {
-        handler = routes["/login"];
+        page = routes["/login"];
       }
     } else {
-      handler = routes[path] || routes["/error"];
+      page = routes[path] || routes["/error"];
     }
-    if (handler) {
-      document.body.innerHTML = handler();
+    if (page) {
+      console.log(page);
+      const { view, init } = page();
+      document.body.innerHTML = view;
+      init();
     } else {
       /* empty */
     }

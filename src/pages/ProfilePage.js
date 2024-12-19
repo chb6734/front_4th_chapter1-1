@@ -1,4 +1,7 @@
-export const ProfilePage = () => `
+import { router } from "../main";
+
+export const ProfilePage = () => {
+  const view = `
   <div id="root">
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
@@ -10,7 +13,7 @@ export const ProfilePage = () => `
           <ul class="flex justify-around">
             <li><a href="/" class="text-gray-600">홈</a></li>
             <li><a href="/profile" class="text-blue-600">프로필</a></li>
-            <li><a href="#" class="text-gray-600">로그아웃</a></li>
+            <li><a href="#" id = "logout" class="text-gray-600">로그아웃</a></li>
           </ul>
         </nav>
 
@@ -80,3 +83,22 @@ export const ProfilePage = () => `
     </div>
   </div>
 `;
+  const init = () => {
+    const form = document.querySelector("nav");
+    console.log(form);
+    if (form) {
+      form.addEventListener("click", (e) => {
+        if (e.target.tagName === "A") {
+          e.preventDefault();
+          router.navigateTo(e.target.pathname);
+          if (e.target.text === "로그아웃") {
+            localStorage.clear();
+            router.navigateTo("/login");
+          }
+        }
+      });
+    }
+  };
+
+  return { view, init };
+};

@@ -1,4 +1,7 @@
-export const MainPage = () => `
+import { router } from "../main";
+
+export const MainPage = () => {
+  const view = `
   <div class="bg-gray-100 min-h-screen flex justify-center">
     <div class="max-w-md w-full">
       <header class="bg-blue-600 text-white p-4 sticky top-0">
@@ -109,3 +112,19 @@ export const MainPage = () => `
     </div>
   </div>
 `;
+
+  const init = () => {
+    const form = document.querySelector("nav");
+    console.log(form);
+    if (form) {
+      form.addEventListener("click", (e) => {
+        if (e.target.tagName === "A") {
+          e.preventDefault();
+          router.navigateTo(e.target.pathname);
+        }
+      });
+    }
+  };
+
+  return { view, init };
+};
