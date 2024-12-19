@@ -24,7 +24,7 @@ export const ProfilePage = () => {
             <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">
               내 프로필
             </h2>
-            <form id="profile">
+            <form id="profile-form">
               <div class="mb-4">
                 <label
                   for="username"
@@ -65,7 +65,7 @@ export const ProfilePage = () => {
                   rows="4"
                   class="w-full p-2 border rounded"
                 >
-                "${user.bio ?? ""}"
+                ${user.bio}
                   </textarea>
               </div>
               <button
@@ -98,6 +98,21 @@ export const ProfilePage = () => {
             router.navigateTo("/login");
           }
         }
+      });
+    }
+    const form = document.querySelector("form");
+    if (form) {
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const name = form.querySelector("#username").value;
+        const email = form.querySelector("#email").value;
+        const bio = form.querySelector("#bio").value;
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ username: name, email: email, bio: bio }),
+        );
+        router.navigateTo("/profile");
+        alert("업데이트 되었습니다");
       });
     }
   };
